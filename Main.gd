@@ -23,5 +23,6 @@ func _physics_process(delta):
 	
 	
 func gravitational_force(object1, object2):
-	var force = G*object1.mass*object2.mass/pow(((object1.global_transform.origin.x - object2.global_transform.origin.x)*2 + (object1.global_transform.origin.y - object2.global_transform.origin.y)*2 + (object1.global_transform.origin.z - object2.global_transform.origin.z)*2),1/2)
+	var radius = pow((object2.transform.origin.x - object1.transform.origin.x),2) + pow((object2.transform.origin.y - object1.transform.origin.y),2) + pow((object2.transform.origin.z - object1.transform.origin.z),2)
+	var force = G*object1.mass*object2.mass/radius
 	return force

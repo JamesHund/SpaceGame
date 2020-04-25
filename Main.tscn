@@ -12,7 +12,8 @@ script = ExtResource( 2 )
 
 [node name="Planet1" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 7, 3.27 )
-mass = 1000.0
+mass = 100.0
+linear_velocity = Vector3( 2, 0, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Planet1"]
 mesh = SubResource( 1 )
