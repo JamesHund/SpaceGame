@@ -1,23 +1,32 @@
 extends Spatial
 
-var GRAVITY_SCALING = 10000000000
+# https://github.com/godotengine/godot/blob/058a0afdeca83145d58a95c426dd01216c397ea9/servers/physics_3d/body_3d_sw.cpp
+# transform.origin += total_linear_velocity * p_step;
+# linear_velocity += _inv_mass * force * p_step;
+# linear_velocity *= damp;
+# real_t damp = 1.0 - p_step * area_linear_damp;
+# where area_linear_damp = -1
+
+export var gravity_scaling = 1
 
 var gravity_objects 
-var oldG = 6.674 * 0.000000000001
-var G = oldG * GRAVITY_SCALING
+var oldG = 0.6674
+var G
 
+var count = 0
 
 func _ready():
+	G = oldG * gravity_scaling
 	gravity_objects = [$Planet1, $Planet2]
-	#$LineDrawer.points = [$Planet1.transform.origin, $Planet2.transform.origin]
 	simulate_movement(gravity_objects, 10000)
 	$LineDrawer.enable(true)
-	print($LineDrawer.points.size())
-	
-func _process(delta):
+
+
+func _process(_delta):
 	pass
 
-func _physics_process(delta):
+func _physics_process(_delta):
+	count += 1
 	for x in range(gravity_objects.size()):
 		for y in range(x+1, gravity_objects.size()):
 
@@ -31,8 +40,8 @@ func _physics_process(delta):
 
 			object1.add_central_force(p1 * magnitude)
 			object2.add_central_force(p2 * magnitude)
-	
-	
+
+
 func gravitational_force(object1, object2) -> float:
 	var squared_radius = (
 		pow((object2.transform.origin.x - object1.transform.origin.x), 2) + 
@@ -41,23 +50,11 @@ func gravitational_force(object1, object2) -> float:
 	)
 	var force = G * (object1.mass * object2.mass)/squared_radius
 	return force
-func calcute_all_forces(gravity_objects):
-	var force_changes = {}
-	for x in range(gravity_objects.size()):
-		for y in range(x+1, gravity_objects.size()):
 
-			var object1 = gravity_objects[x]
-			var object2 = gravity_objects[y]
-
-			var magnitude = gravitational_force(object1, object2)
-
-			var p1 = object1.transform.xform_inv(object2.global_transform.origin).normalized()
-			var p2 = object2.transform.xform_inv(object1.global_transform.origin).normalized()
-
-			force_changes[object1] = p1 * magnitude
-			force_changes[object2] = p2 * magnitude
 
 func calcute_all_forces_clean(objects):
+	for object in objects:
+		object[3]=Vector3(0,0,0)
 	for x in range(objects.size()):
 		for y in range(x+1, objects.size()):
 
@@ -72,6 +69,7 @@ func calcute_all_forces_clean(objects):
 			object1[3] += p1 * magnitude
 			object2[3] += p2 * magnitude
 
+
 func gravitational_force_clean(object1, object2) -> float:
 	var squared_radius = (
 		pow((object2[0].origin.x - object1[0].origin.x), 2) + 
@@ -85,33 +83,24 @@ func simulate_movement(all_objects: Array, number: int):
 	var object_tings = []
 	for object in all_objects:
 		object_tings.append([object.transform, object.get_linear_velocity(), object.mass, Vector3(0,0,0), object.get_name()])
-	var time_scale = 1.0/60
+	var time_step = 1.0/60
 	for run in range(number):
-		#prints("--------Step %s------" % (run+1))
+
 		calcute_all_forces_clean(object_tings)
 		for object in object_tings:
-			var postion_x = object[0].origin.x
-			var postion_y = object[0].origin.y
-			var postion_z = object[0].origin.z
-			var velocity_x = object[1].x
-			var velocity_y = object[1].y
-			var velocity_z = object[1].z
-			var new_position_offset_u = Vector3(
-				velocity_x * time_scale,
-				velocity_y * time_scale,
-				velocity_z * time_scale
-			)
-			var new_position_offset_v = Vector3(
-				0.5 * object[3].x/object[2] * pow(time_scale, 2),
-				0.5 * object[3].y/object[2] * pow(time_scale, 2),
-				0.5 * object[3].z/object[2] * pow(time_scale, 2)
-			)
-			draw_line(object[4], object[0].origin,object[0].origin+new_position_offset_u+new_position_offset_v)
-			object[0][3] =  object[0][3] + new_position_offset_u+new_position_offset_v
+			var velocity = object[1]
+			var mass = object[2]
+			var force = object[3]
+			var position = object[0][3]
+			velocity += force/mass * time_step
+			position += velocity * time_step
+			draw_line(object[4], object[0].origin,position)
+			object[0][3] =  position
+			object[1] = velocity
 
 
 func draw_line(name, start: Vector3, end: Vector3):
 	$LineDrawer.points.append(start)
 	$LineDrawer.points.append(end)
-	#prints(name, start,end)
+#	prints(name, start,end)
 
