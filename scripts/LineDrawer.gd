@@ -8,8 +8,7 @@ func _ready():
 func enable(enabled : bool):
 	set_process(enabled)
 
-func _process(delta):
-	print('yeet')
+func _process(_delta):
 	clear()
 	begin(Mesh.PRIMITIVE_LINES)
 	set_color(Color.red)
