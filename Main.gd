@@ -17,7 +17,11 @@ var count = 0
 
 func _ready():
 	G = oldG * gravity_scaling
-	gravity_objects = [$Planet1, $Planet2]
+	gravity_objects = []
+	for node in get_children():
+		if(node is RigidBody):
+			gravity_objects.append(node)
+	print(gravity_objects)
 	simulate_movement(gravity_objects, 10000)
 	$LineDrawer.enable(true)
 
