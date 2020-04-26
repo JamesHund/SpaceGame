@@ -1,37 +1,64 @@
-[gd_scene load_steps=6 format=2]
+<<<<<<< HEAD
+[gd_scene load_steps=9 format=2]
+=======
+[gd_scene load_steps=7 format=2]
+>>>>>>> 06eb12ec06a18040b8854747248c3e93bd1341bd
 
 [ext_resource path="res://FreeLookPlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://scripts/LineDrawer.gd" type="Script" id=3]
+<<<<<<< HEAD
+[ext_resource path="res://default_env.tres" type="Environment" id=4]
+[ext_resource path="res://8k_sun.jpg" type="Texture" id=5]
+=======
+[ext_resource path="res://Planet.tscn" type="PackedScene" id=4]
+>>>>>>> 06eb12ec06a18040b8854747248c3e93bd1341bd
 
 [sub_resource type="SphereMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_unshaded = true
+albedo_texture = ExtResource( 5 )
 
 [sub_resource type="SphereShape" id=2]
 
 [node name="Main" type="Spatial"]
 script = ExtResource( 2 )
+gravity_scaling = 3
 
+<<<<<<< HEAD
 [node name="Planet1" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 7, -4.51516 )
-mass = 1000.0
+mass = 3820.51
+
+[node name="OmniLight" type="OmniLight" parent="Planet1"]
+omni_range = 1949.0
 
 [node name="MeshInstance" type="MeshInstance" parent="Planet1"]
+transform = Transform( 20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0 )
 mesh = SubResource( 1 )
-material/0 = null
+material/0 = SubResource( 3 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="CollisionShape" type="CollisionShape" parent="Planet1"]
+transform = Transform( 20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0 )
 shape = SubResource( 2 )
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="Planet2" type="RigidBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 53.48, 6.9884, 24.7777 )
+linear_velocity = Vector3( -10, 0, 7 )
+=======
+[node name="Planet1" parent="." instance=ExtResource( 4 )]
+
+[node name="Planet2" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.00375, 6.9884, 7.49387 )
-mass = 2.0
-linear_velocity = Vector3( -2, 0, 0 )
+mass = 10.09
+>>>>>>> 06eb12ec06a18040b8854747248c3e93bd1341bd
 
 [node name="MeshInstance" type="MeshInstance" parent="Planet2"]
 mesh = SubResource( 1 )
@@ -47,7 +74,17 @@ __meta__ = {
 }
 
 [node name="FreeLookPlayer" parent="." instance=ExtResource( 1 )]
-transform = Transform( 0.134574, 0, 0.990904, 0, 1, 0, -0.990904, 0, 0.134574, 0, 18.2267, -4.46331 )
+transform = Transform( 0.134574, 0, 0.990904, 0, 1, 0, -0.990904, 0, 0.134574, 73.6214, 4.70283, -4.46331 )
 
 [node name="LineDrawer" type="ImmediateGeometry" parent="."]
 script = ExtResource( 3 )
+
+<<<<<<< HEAD
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 4 )
+=======
+[node name="Planet_scene" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6228, 8.88983, 15.0567 )
+mass = 100.0
+PLANET_SCALE = 3
+>>>>>>> 06eb12ec06a18040b8854747248c3e93bd1341bd
