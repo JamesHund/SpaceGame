@@ -26,8 +26,8 @@ func _physics_process(delta):
 
 			var magnitude = gravitational_force(object1, object2)
 
-			var p1 = object1.transform.xform_inv(object2.global_transform.origin)
-			var p2 = object2.transform.xform_inv(object1.global_transform.origin)
+			var p1 = object1.transform.xform_inv(object2.global_transform.origin).normalized()
+			var p2 = object2.transform.xform_inv(object1.global_transform.origin).normalized()
 
 			object1.add_central_force(p1 * magnitude)
 			object2.add_central_force(p2 * magnitude)
@@ -51,8 +51,8 @@ func calcute_all_forces(gravity_objects):
 
 			var magnitude = gravitational_force(object1, object2)
 
-			var p1 = object1.transform.xform_inv(object2.global_transform.origin)
-			var p2 = object2.transform.xform_inv(object1.global_transform.origin)
+			var p1 = object1.transform.xform_inv(object2.global_transform.origin).normalized()
+			var p2 = object2.transform.xform_inv(object1.global_transform.origin).normalized()
 
 			force_changes[object1] = p1 * magnitude
 			force_changes[object2] = p2 * magnitude
@@ -66,8 +66,8 @@ func calcute_all_forces_clean(objects):
 
 			var magnitude = gravitational_force_clean(object1, object2)
 
-			var p1 = object1[0].xform_inv(object2[0].origin)
-			var p2 = object2[0].xform_inv(object1[0].origin)
+			var p1 = object1[0].xform_inv(object2[0].origin).normalized()
+			var p2 = object2[0].xform_inv(object1[0].origin).normalized()
 
 			object1[3] += p1 * magnitude
 			object2[3] += p2 * magnitude
