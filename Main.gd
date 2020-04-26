@@ -10,6 +10,11 @@ var G = oldG * GRAVITY_SCALING
 func _ready():
 	gravity_objects = [$Planet1, $Planet2]
 	simulate_movement(gravity_objects, 60)
+	$LineDrawer.points = [$Planet1.transform.origin, $Planet2.transform.origin]
+	$LineDrawer.enable(true)
+	
+func _process(delta):
+	$LineDrawer.points = [$Planet1.transform.origin, $Planet2.transform.origin]
 
 func _physics_process(delta):
 #	var force_changes = calcute_all_forces(gravity_objects)
