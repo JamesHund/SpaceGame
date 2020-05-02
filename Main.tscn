@@ -13,9 +13,6 @@
 [node name="Main" type="Spatial"]
 script = ExtResource( 2 )
 
-[node name="Planet1" parent="." instance=ExtResource( 4 )]
-PLANET_SCALE = 2
-
 [node name="Planet2" type="RigidBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.00375, 6.9884, 7.49387 )
 mass = 10.09
@@ -42,7 +39,13 @@ script = ExtResource( 3 )
 [node name="Planet_scene" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6228, 8.88983, 15.0567 )
 mass = 100.0
-PLANET_SCALE = 3
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 5 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 21.0924, -21.0006 )
+omni_range = 105.257
+
+[node name="Planet1" parent="." instance=ExtResource( 4 )]
+PLANET_SCALE = 2.5

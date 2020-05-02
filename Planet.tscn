@@ -6,19 +6,16 @@
 
 [sub_resource type="SphereShape" id=2]
 
-[node name="Planet" type="RigidBody"]
+[node name="Planet" type="RigidBody" groups=[
+"planet",
+]]
 gravity_scale = -1.0
 script = ExtResource( 1 )
+PLANET_DENSITY = 1
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
 material/0 = null
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 2 )
-__meta__ = {
-"_edit_lock_": true
-}
