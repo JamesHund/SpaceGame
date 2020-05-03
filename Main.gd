@@ -103,7 +103,7 @@ func simulate_movement(all_objects: Array, number: int):
 			object[1] = velocity
 
 
-func draw_line(name, start: Vector3, end: Vector3):
+func draw_line(oname, start: Vector3, end: Vector3):
 	$LineDrawer.points.append(start)
 	$LineDrawer.points.append(end)
 #	prints(name, start,end)

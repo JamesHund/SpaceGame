@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://FreeLookPlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Main.gd" type="Script" id=2]
 [ext_resource path="res://scripts/LineDrawer.gd" type="Script" id=3]
 [ext_resource path="res://Planet.tscn" type="PackedScene" id=4]
-[ext_resource path="res://new_env.tres" type="Environment" id=5]
+[ext_resource path="res://default_env.tres" type="Environment" id=5]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=6]
 
 [sub_resource type="SphereMesh" id=1]
 
@@ -49,3 +50,6 @@ omni_range = 105.257
 
 [node name="Planet1" parent="." instance=ExtResource( 4 )]
 PLANET_SCALE = 2.5
+
+[node name="Player" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.29304, 17.42, -4.82965 )
